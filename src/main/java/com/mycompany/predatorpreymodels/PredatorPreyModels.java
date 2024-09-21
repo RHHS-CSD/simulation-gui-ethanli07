@@ -22,6 +22,9 @@ public class PredatorPreyModels {
         final int preyPop = 4;
         final int gridSize = 4;
         
+        //reproduction rates
+        int preyRepRate = 10;
+        
         //Find initial population positions
         String predator = "";
         for (int i = 0; i < predPop; i++) {
@@ -300,7 +303,7 @@ public class PredatorPreyModels {
                     default:
                         break;
                 }
-                if (r.nextInt(10) == 0) {
+                if (r.nextInt(preyRepRate) == 0) {
                     prey += (" " + preyOP);
                 }
                 
@@ -326,7 +329,17 @@ public class PredatorPreyModels {
             for (int i = 0; i < predator.length(); i += 3) {
                 predMoved += "F ";
             }
-        
+            
+            //randomly affect the chance for prey to reproduce (due to lack/surplus of food in a given period due to environmental factors)
+            int cropGrowthRate = r.nextInt(10);
+            if (cropGrowthRate == 0) {
+                preyRepRate += 1; //decreases chance for reproduction
+            }
+            if (cropGrowthRate == 1) {
+                preyRepRate -= 1; //increases chance for reproduction
+            }
+            
+            //print out new grid
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid.length; j++) {
                     System.out.print(grid[i][j]);
