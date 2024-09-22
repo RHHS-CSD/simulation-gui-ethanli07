@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Program that simulates the behavior of predators and prey
+ * Program Model that simulates the population dynamics between predators and prey using a 2D grid
  * @author Ethan
  */
 public class PredatorPreyModels {
