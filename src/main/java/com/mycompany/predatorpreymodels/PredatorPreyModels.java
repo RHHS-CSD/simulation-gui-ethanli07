@@ -18,14 +18,15 @@ public class PredatorPreyModels {
         Random r = new Random();
         
         //constants
-        final int predPop = 2;
-        final int preyPop = 4;
-        final int gridSize = 4;
+        final int predPop = 10;
+        final int preyPop = 100;
+        final int gridSize = 20;
+        final int obstacleNum = 20;
         
         //reproduction rates
         int preyRepRate = 10;
         
-        //Find initial population positions
+        //Find initial population & obstacle positions
         String predator = "";
         for (int i = 0; i < predPop; i++) {
             predator += ((char)('A' + r.nextInt(gridSize)) + "" + (char)('A' + r.nextInt(gridSize)) + " ");
@@ -38,17 +39,23 @@ public class PredatorPreyModels {
         }
         prey = prey.substring(0, prey.length() - 1);
         
+        String obstacle = "";
+        for (int i = 0; i < obstacleNum; i++) {
+            obstacle += ((char)('A' + r.nextInt(gridSize)) + "" + (char)('A' + r.nextInt(gridSize)) + " ");
+        }
+        obstacle = obstacle.substring(0, obstacle.length() - 1);
+        
         //Build Grid
         String grid[][] = new String[gridSize][gridSize];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {    
-                grid[i][j] = "*";
+                grid[i][j] = ".";
             }
         }
         
-        //Assign initial predator and prey positions
+        //Assign initial predator, prey, and obstacle positions
         for (int i = 0; i < predator.length(); i += 3) {
-            if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 65].equals("*")) {
+            if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 65].equals(".")) {
                 grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 65] = "P";
             }
             else {
@@ -56,12 +63,23 @@ public class PredatorPreyModels {
                 i -= 3;
             }
         }
+        
         for (int i = 0; i < prey.length(); i += 3) {
-            if (grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 65].equals("*")) {
+            if (grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 65].equals(".")) {
                 grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 65] = "@";
             }
             else {
                 prey = prey.substring(0, i) + (char)('A' + r.nextInt(gridSize)) + (char)('A' + r.nextInt(gridSize)) + prey.substring(i + 2);
+                i -= 3;
+            }
+        }
+        
+        for (int i = 0; i < obstacle.length(); i += 3) {
+            if (grid[obstacle.charAt(i) - 65][obstacle.charAt(i + 1) - 65].equals(".")) {
+                grid[obstacle.charAt(i) - 65][obstacle.charAt(i + 1) - 65] = "*";
+            }
+            else {
+                obstacle = obstacle.substring(0, i) + (char)('A' + r.nextInt(gridSize)) + (char)('A' + r.nextInt(gridSize)) + obstacle.substring(i + 2);
                 i -= 3;
             }
         }
@@ -78,7 +96,7 @@ public class PredatorPreyModels {
         //Predator movement and hunger checks
         String predAte = "";
         for (int i = 0; i < predPop; i++) {
-            predAte += ('A' + gridSize - 1) + " ";
+            predAte += (('A' + gridSize - 1) + " ");
         }
         
         String predMoved = "";
@@ -87,7 +105,7 @@ public class PredatorPreyModels {
         }
         
         //simulate the program
-        for (int a = 0; a < 10; a++) {
+        while (true) {
             for (int i = 0; i < predator.length(); i += 3) {
                 for (int j = 0; j < prey.length(); j += 3) {
                     //predator movement if prey is nearby
@@ -167,7 +185,7 @@ public class PredatorPreyModels {
                                 predator = predator.substring(0, i) + 'A' + predator.substring(i + 1);
                             }
                             else {
-                                if (grid[predator.charAt(i) - 64][predator.charAt(i + 1) - 65].equals("*")) {
+                                if (grid[predator.charAt(i) - 64][predator.charAt(i + 1) - 65].equals(".")) {
                                     predator = predator.substring(0, i) + (char) (predator.charAt(i) + 1) + predator.substring(i + 1);
                                 }
                             }
@@ -177,7 +195,7 @@ public class PredatorPreyModels {
                                 predator = predator.substring(0, i) + (char) ('A' + gridSize - 1) + predator.substring(i + 1);
                             }
                             else {
-                                if (grid[predator.charAt(i) - 66][predator.charAt(i + 1) - 65].equals("*")) {
+                                if (grid[predator.charAt(i) - 66][predator.charAt(i + 1) - 65].equals(".")) {
                                     predator = predator.substring(0, i) + (char) (predator.charAt(i) - 1) + predator.substring(i + 1);
                                 }
                             }
@@ -187,7 +205,7 @@ public class PredatorPreyModels {
                                 predator = predator.substring(0, i + 1) + 'A' + predator.substring(i + 2);
                             }
                             else {
-                                if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 64].equals("*")) {
+                                if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 64].equals(".")) {
                                     predator = predator.substring(0, i + 1) + (char) (predator.charAt(i + 1) + 1) + predator.substring(i + 2);
                                 }
                             }
@@ -197,7 +215,7 @@ public class PredatorPreyModels {
                                 predator = predator.substring(0, i + 1) + (char) ('A' + gridSize - 1) + predator.substring(i + 2);
                             }
                             else {
-                                if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 66].equals("*")) {
+                                if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 66].equals(".")) {
                                     predator = predator.substring(0, i + 1) + (char) (predator.charAt(i + 1) - 1) + predator.substring(i + 2);
                                 }
                             }
@@ -209,6 +227,8 @@ public class PredatorPreyModels {
                     //random check for if the predator should reproduce
                     if (r.nextInt(20) == 0 && predAte.charAt(i*2/3) >= 'J') {
                         predator += (" " + predatorOP);
+                        predAte += "F ";
+                        predMoved += "T ";
                     } 
                 }
                 
@@ -216,10 +236,10 @@ public class PredatorPreyModels {
                 if (predAte.charAt(i*2/3) < 'A') {
                     if (i == predator.length() - 2) {
                         if (i > 0) {
-                            prey = prey.substring(0, i - 1);
+                            predator = predator.substring(0, i - 1);
                         }
                         else {
-                            prey = prey.substring(0, i);
+                            predator = predator.substring(0, i);
                         }
                     }
                     else {
@@ -229,13 +249,16 @@ public class PredatorPreyModels {
                     if (predAte.charAt(i*2/3) == predAte.length() - 1) {
                         if (i*2/3 > 0) {
                             predAte = predAte.substring(0, i*2/3 - 1);
+                            predMoved = predMoved.substring(0, i*2/3 - 1);
                         }
                         else {
                             predAte = predAte.substring(0, i*2/3);
+                            predMoved = predMoved.substring(0, i*2/3);
                         }
                     }
                     else {
                         predAte = predAte.substring(0, i*2/3) + predAte.substring(i*2/3 + 2);
+                        predMoved = predMoved.substring(0, i*2/3) + predMoved.substring(i*2/3 + 2);
                     }
                 }
                 
@@ -243,16 +266,18 @@ public class PredatorPreyModels {
                 grid = new String[gridSize][gridSize];
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {    
-                        grid[j][k] = "*";
+                        grid[j][k] = ".";
                     }
                 }
                 
-                System.out.println(predator);
                 for (int j = 0; j < predator.length(); j += 3) {
                     grid[predator.charAt(j) - 65][predator.charAt(j + 1) - 65] = "P";
                 }
                 for (int j = 0; j < prey.length(); j += 3) {
                     grid[prey.charAt(j) - 65][prey.charAt(j + 1) - 65] = "@";
+                }
+                for (int j = 0; j < obstacle.length(); j += 3) {
+                    grid[obstacle.charAt(j) - 65][obstacle.charAt(j + 1) - 65] = "*";
                 }
             } //end of predator string
                     
@@ -265,7 +290,7 @@ public class PredatorPreyModels {
                                 prey = prey.substring(0, i) + 'A' + prey.substring(i + 1);
                         }
                         else {
-                            if (grid[prey.charAt(i) - 64][prey.charAt(i + 1) - 65].equals("*")) {
+                            if (grid[prey.charAt(i) - 64][prey.charAt(i + 1) - 65].equals(".")) {
                                 prey = prey.substring(0, i) + (char) (prey.charAt(i) + 1) + prey.substring(i + 1);
                             }
                         }
@@ -275,7 +300,7 @@ public class PredatorPreyModels {
                                 prey = prey.substring(0, i) + (char) ('A' + gridSize - 1) + prey.substring(i + 1);
                         }
                         else {    
-                            if (grid[prey.charAt(i) - 66][prey.charAt(i + 1) - 65].equals("*")) {
+                            if (grid[prey.charAt(i) - 66][prey.charAt(i + 1) - 65].equals(".")) {
                                 prey = prey.substring(0, i) + (char) (prey.charAt(i) - 1) + prey.substring(i + 1);
                             }
                         }
@@ -285,7 +310,7 @@ public class PredatorPreyModels {
                                 prey = prey.substring(0, i + 1) + 'A' + prey.substring(i + 2);
                         }
                         else {
-                            if (grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 64].equals("*")) {
+                            if (grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 64].equals(".")) {
                                 prey = prey.substring(0, i + 1) + (char) (prey.charAt(i + 1) + 1) + prey.substring(i + 2);
                             }
                         }
@@ -295,7 +320,7 @@ public class PredatorPreyModels {
                                 prey = prey.substring(0, i + 1) + (char) ('A' + gridSize - 1) + prey.substring(i + 2);
                         }
                         else {
-                            if (grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 66].equals("*")) {
+                            if (grid[prey.charAt(i) - 65][prey.charAt(i + 1) - 66].equals(".")) {
                                 prey = prey.substring(0, i + 1) + (char) (prey.charAt(i + 1) - 1) + prey.substring(i + 2);
                             }
                         }
@@ -311,16 +336,18 @@ public class PredatorPreyModels {
                 grid = new String[gridSize][gridSize];
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {    
-                        grid[j][k] = "*";
+                        grid[j][k] = ".";
                     }
                 }
                 
-                System.out.println(prey);
                 for (int j = 0; j < predator.length(); j += 3) {
                     grid[predator.charAt(j) - 65][predator.charAt(j + 1) - 65] = "P";
                 }
                 for (int j = 0; j < prey.length(); j += 3) {
                     grid[prey.charAt(j) - 65][prey.charAt(j + 1) - 65] = "@";
+                }
+                for (int j = 0; j < obstacle.length(); j += 3) {
+                    grid[obstacle.charAt(j) - 65][obstacle.charAt(j + 1) - 65] = "*";
                 }
             }// end of prey loop
             
