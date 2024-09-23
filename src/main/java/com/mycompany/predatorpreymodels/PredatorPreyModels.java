@@ -14,7 +14,7 @@ import java.util.Random;
 public class PredatorPreyModels {
     public static void main(String[] args) {
         ///// Variables /////
-        //Random
+        //Random initialization
         Random r = new Random();
         
         //constants
@@ -23,10 +23,10 @@ public class PredatorPreyModels {
         final int gridSize = 20;
         final int obstacleNum = 20;
         
-        //reproduction rates
+        //prey reproduction rate
         int preyRepRate = 10;
         
-        //Find initial population & obstacle positions
+        //Set initial prey + predator population & obstacle positions
         String predator = "";
         for (int i = 0; i < predPop; i++) {
             predator += ((char)('A' + r.nextInt(gridSize)) + "" + (char)('A' + r.nextInt(gridSize)) + " ");
@@ -45,7 +45,7 @@ public class PredatorPreyModels {
         }
         obstacle = obstacle.substring(0, obstacle.length() - 1);
         
-        //Build Grid
+        //Build the 2D Grid
         String grid[][] = new String[gridSize][gridSize];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {    
@@ -53,7 +53,7 @@ public class PredatorPreyModels {
             }
         }
         
-        //Assign initial predator, prey, and obstacle positions
+        //Assign initial predator, prey, and obstacle positions on the grid
         for (int i = 0; i < predator.length(); i += 3) {
             if (grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 65].equals(".")) {
                 grid[predator.charAt(i) - 65][predator.charAt(i + 1) - 65] = "P";
@@ -93,10 +93,10 @@ public class PredatorPreyModels {
         }
         System.out.println("");
         
-        //Predator movement and hunger checks
+        //Create predator movement and hunger strings to keep track of each variable respectively
         String predAte = "";
         for (int i = 0; i < predPop; i++) {
-            predAte += (('A' + gridSize - 1) + " ");
+            predAte += ("T ");
         }
         
         String predMoved = "";
@@ -104,12 +104,12 @@ public class PredatorPreyModels {
             predMoved += "F ";
         }
         
-        //simulate the program
+        //Simulate the program
         while (true) {
             for (int i = 0; i < predator.length(); i += 3) {
                 for (int j = 0; j < prey.length(); j += 3) {
-                    //predator movement if prey is nearby
-                    if (((predator.charAt(i) + 1) == prey.charAt(j)) && ((predator.charAt(i + 1)) == prey.charAt(j + 1))) {
+                    //for each predator, check if a prey is on an adjacent square
+                    if (((predator.charAt(i) + 1) == prey.charAt(j)) && ((predator.charAt(i + 1)) == prey.charAt(j + 1))) { //bottom tile
                         predator = predator.substring(0, i) + prey.charAt(j) + predator.substring(i + 1);
                         if (j == prey.length() - 2) {
                             if (j > 0) {
@@ -125,7 +125,7 @@ public class PredatorPreyModels {
                         predAte = predAte.substring(0, i*2/3) + "T" + predAte.substring(i*2/3 + 1);
                         predMoved = predMoved.substring(0, i*2/3) + "T" + predMoved.substring(i*2/3 + 1);
                     } 
-                    else if (((predator.charAt(i) - 1) == prey.charAt(j)) && ((predator.charAt(i + 1)) == prey.charAt(j + 1))) {
+                    else if (((predator.charAt(i) - 1) == prey.charAt(j)) && ((predator.charAt(i + 1)) == prey.charAt(j + 1))) { //up tile
                         predator = predator.substring(0, i) + prey.charAt(j) + predator.substring(i + 1);
                         if (j == prey.length() - 2) {
                             if (j > 0) {
@@ -141,7 +141,7 @@ public class PredatorPreyModels {
                         predAte = predAte.substring(0, i*2/3) + "T" + predAte.substring(i*2/3 + 1);
                         predMoved = predMoved.substring(0, i*2/3) + "T" + predMoved.substring(i*2/3 + 1);
                     } 
-                    else if (((predator.charAt(i)) == prey.charAt(j)) && ((predator.charAt(i + 1) + 1) == prey.charAt(j + 1))) {
+                    else if (((predator.charAt(i)) == prey.charAt(j)) && ((predator.charAt(i + 1) + 1) == prey.charAt(j + 1))) { //right tile
                         predator = predator.substring(0, i + 1) + prey.charAt(j + 1) + predator.substring(i + 2);
                         if (j == prey.length() - 2) {
                             if (j > 0) {
@@ -157,7 +157,7 @@ public class PredatorPreyModels {
                         predAte = predAte.substring(0, i*2/3) + "T" + predAte.substring(i*2/3 + 1);
                         predMoved = predMoved.substring(0, i*2/3) + "T" + predMoved.substring(i*2/3 + 1);
                     }
-                    else if (((predator.charAt(i)) == prey.charAt(j)) && ((predator.charAt(i + 1) - 1) == prey.charAt(j + 1))) {
+                    else if (((predator.charAt(i)) == prey.charAt(j)) && ((predator.charAt(i + 1) - 1) == prey.charAt(j + 1))) { //left tile
                         predator = predator.substring(0, i + 1) + prey.charAt(j + 1) + predator.substring(i + 2);
                         if (j == prey.length() - 2) {
                             if (j > 0) {
@@ -180,7 +180,7 @@ public class PredatorPreyModels {
                     predAte = predAte.substring(0, i*2/3) + (char) (predAte.charAt(i*2/3) - 1) + predAte.substring(i*2/3 + 1);
                     String predatorOP = predator.substring(i, i + 2);
                     switch (r.nextInt(4)) {
-                        case 0:
+                        case 0: //move down
                             if (predator.charAt(i) == ('A' + gridSize - 1)) {
                                 predator = predator.substring(0, i) + 'A' + predator.substring(i + 1);
                             }
@@ -190,7 +190,7 @@ public class PredatorPreyModels {
                                 }
                             }
                             break;
-                        case 1:
+                        case 1: //move up
                             if (predator.charAt(i) == 'A') {
                                 predator = predator.substring(0, i) + (char) ('A' + gridSize - 1) + predator.substring(i + 1);
                             }
@@ -200,7 +200,7 @@ public class PredatorPreyModels {
                                 }
                             }
                             break;
-                        case 2:
+                        case 2: //move right
                             if (predator.charAt(i + 1) == ('A' + gridSize - 1)) {
                                 predator = predator.substring(0, i + 1) + 'A' + predator.substring(i + 2);
                             }
@@ -210,7 +210,7 @@ public class PredatorPreyModels {
                                 }
                             }
                             break;
-                        case 3:
+                        case 3: //move left
                             if (predator.charAt(i + 1) == 'A') {
                                 predator = predator.substring(0, i + 1) + (char) ('A' + gridSize - 1) + predator.substring(i + 2);
                             }
@@ -232,7 +232,7 @@ public class PredatorPreyModels {
                     } 
                 }
                 
-                //checks if the predator should die
+                //checks if the predator should die and updates strings if they should
                 if (predAte.charAt(i*2/3) < 'A') {
                     if (i == predator.length() - 2) {
                         if (i > 0) {
@@ -270,6 +270,7 @@ public class PredatorPreyModels {
                     }
                 }
                 
+                //remap the grid
                 for (int j = 0; j < predator.length(); j += 3) {
                     grid[predator.charAt(j) - 65][predator.charAt(j + 1) - 65] = "P";
                 }
@@ -281,12 +282,12 @@ public class PredatorPreyModels {
                 }
             } //end of predator string
                     
-            //prey movement
+            //randomly move each prey
             for (int i = 0; i < prey.length(); i += 3) {
                 String preyOP = prey.substring(i, i + 2);
                 switch (r.nextInt(4)) {
                     case 0:
-                        if (prey.charAt(i) == ('A' + gridSize - 1)) {
+                        if (prey.charAt(i) == ('A' + gridSize - 1)) { //move down
                                 prey = prey.substring(0, i) + 'A' + prey.substring(i + 1);
                         }
                         else {
@@ -296,7 +297,7 @@ public class PredatorPreyModels {
                         }
                         break;
                     case 1:
-                        if (prey.charAt(i) == 'A') {
+                        if (prey.charAt(i) == 'A') { //move up
                                 prey = prey.substring(0, i) + (char) ('A' + gridSize - 1) + prey.substring(i + 1);
                         }
                         else {    
@@ -306,7 +307,7 @@ public class PredatorPreyModels {
                         }
                         break;
                     case 2:
-                        if (prey.charAt(i + 1) == ('A' + gridSize - 1)) {
+                        if (prey.charAt(i + 1) == ('A' + gridSize - 1)) { //move right
                                 prey = prey.substring(0, i + 1) + 'A' + prey.substring(i + 2);
                         }
                         else {
@@ -316,7 +317,7 @@ public class PredatorPreyModels {
                         }
                         break;
                     case 3:
-                        if (prey.charAt(i + 1) == 'A') {
+                        if (prey.charAt(i + 1) == 'A') { //move left
                                 prey = prey.substring(0, i + 1) + (char) ('A' + gridSize - 1) + prey.substring(i + 2);
                         }
                         else {
@@ -328,11 +329,11 @@ public class PredatorPreyModels {
                     default:
                         break;
                 }
-                if (r.nextInt(preyRepRate) == 0) {
+                if (r.nextInt(preyRepRate) == 0) { //randomly check if the prey should reproduce
                     prey += (" " + preyOP);
                 }
                 
-                //update prey position on the grid
+                //update the prey position on the grid
                 grid = new String[gridSize][gridSize];
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {    
@@ -340,6 +341,7 @@ public class PredatorPreyModels {
                     }
                 }
                 
+                //remap the grid
                 for (int j = 0; j < predator.length(); j += 3) {
                     grid[predator.charAt(j) - 65][predator.charAt(j + 1) - 65] = "P";
                 }
@@ -366,7 +368,7 @@ public class PredatorPreyModels {
                 preyRepRate -= 1; //increases chance for reproduction
             }
             
-            //print out new grid
+            //output the new grid
             for (int i = 0; i < grid.length; i++) {
                 for (int j = 0; j < grid.length; j++) {
                     System.out.print(grid[i][j]);
