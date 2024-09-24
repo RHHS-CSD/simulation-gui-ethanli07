@@ -1,6 +1,6 @@
 Rules/Mods: I made the reproduction of prey change randomly over time to mimic the varying growth of grass/food for prey in real life. I also introduced randomly generated obstacles (such as rocks and trees) that appear in real life that prevent predators or prey from inhabiting certain squares.
 
-Challenges: I have no clue why I chose to use strings instead of arraylists. This made keeping track of positions with spaces very hard :(. I solved it by just doing some testing and making sure I spliced my strings correctly
+Challenges: I have no clue why I chose to use strings instead of arraylists. This made keeping track of positions with spaces very hard :( because sometimes I would splice incorrectly and end up with an incorrect string. I solved this issue by just doing some testing and making sure I spliced my strings correctly.
 
 Sample Output: 
 ...@@@......@..@....
@@ -128,3 +128,5 @@ P@.@.@.*..@.........
 ..@.@@..*@@*.@.P@.*.
 ...@@@.....@.*..@@..
 @@....@...@..@..@...
+
+Easter egg: .. / .-- .- -. -. .- / - .- -.- . / .- / -. .- .--. / ---... -.--.

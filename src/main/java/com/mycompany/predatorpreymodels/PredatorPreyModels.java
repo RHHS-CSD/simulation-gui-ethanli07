@@ -360,7 +360,7 @@ public class PredatorPreyModels {
             }
             
             //randomly affect the chance for prey to reproduce (due to lack/surplus of food in a given period due to environmental factors)
-            int cropGrowthRate = r.nextInt(10);
+            int cropGrowthRate = r.nextInt(12);
             if (cropGrowthRate == 0) {
                 preyRepRate += 1; //decreases chance for reproduction
             }
