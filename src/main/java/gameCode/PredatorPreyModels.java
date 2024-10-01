@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.predatorpreymodels;
+package gameCode;
 
 import java.util.Arrays;
 import java.util.Random;
