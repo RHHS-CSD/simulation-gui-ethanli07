@@ -104,6 +104,13 @@ public class PredatorPreyModels {
             predMoved += "F ";
         }
         
+        //run the main program
+        simulateProgram(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, gridSize);
+    }
+     
+    public static void simulateProgram(String prey, String predator, String obstacle, String predAte, String predMoved, int preyRepRate, String[][] grid, int gridSize) {
+        Random r = new Random();
+
         //Simulate the program
         while (true) {
             for (int i = 0; i < predator.length(); i += 3) {

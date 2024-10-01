@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-import java.awt.Color;
 import utils.CardSwitcher;
 import utils.ImageUtil;
 import java.awt.Graphics;
@@ -13,10 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.AbstractAction;
-import javax.swing.JColorChooser;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import gameCode.PredatorPreyModels;
@@ -47,15 +44,21 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     
     //position strings
     String prey = "";
-    String pred = "";
+    String predator = "";
     String obstacle = "";
+    
+    //pred info strings
+    String predAte = "";
+    String predMoved = "";
     
     //create the grid
     String[][] grid = new String[gridSize][gridSize];
     
     //game variables
     boolean startGame = false;
-    int speed = 0;
+    int preyRepRate = 12;
+    int count = 0;
+    int speed = 20;
     
     
     /**
@@ -91,6 +94,15 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                 grid[i][j] = ".";
             }
         }
+        
+        //create the pred info strings
+        for (int i = 0; i < (predator.length() + 1)/3; i++) {
+            predAte += ("T ");
+        }
+        
+        for (int i = 0; i < (predator.length() + 1)/3; i++) {
+            predMoved += "F ";
+        }
     }
 
     private void setupKeys() {
@@ -124,8 +136,8 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         } 
         
         //draw prey, pred, and obstacles on the panel
-        for (int i = 0; i < (pred.length() + 1)/3; i++) {
-            g.drawImage(predImg, pred.charAt(i * 3) - 65, pred.charAt(i * 3 + 1) - 65, this);
+        for (int i = 0; i < (predator.length() + 1)/3; i++) {
+            g.drawImage(predImg, predator.charAt(i * 3) - 65, predator.charAt(i * 3 + 1) - 65, this);
         }
         for (int i = 0; i < (prey.length() + 1)/3; i++) {
             g.drawImage(preyImg, prey.charAt(i * 3) - 65, prey.charAt(i * 3 + 1) - 65, this);
@@ -208,7 +220,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                 grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "*";
             }
             else if (me.getButton() == MouseEvent.BUTTON3) { //right click to place pred
-                pred += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65));
+                predator += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65));
                 grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "P";
             }
         }
@@ -243,6 +255,11 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
      */
     private class AnimTimerTick implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
+            count += 1;
+            if (count % speed == 0) {
+                PredatorPreyModels.simulateProgram(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, 20);
+            }
+            
             //force redraw
             repaint();
         }
