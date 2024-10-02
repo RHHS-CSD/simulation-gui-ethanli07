@@ -40,7 +40,7 @@ public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher 
      * Creates new form FrameForGame
      */
     public SimulationFrame() {
-        this.setSize(420, 420);
+        this.setSize(400, 440);
         
         //card layout shows one panel at a time
         cl = new CardLayout();
@@ -50,7 +50,7 @@ public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher 
         
         //add 3 panels to the CardLayout
         addPanels();
-        switchToCard(GamePanel.CARD_NAME);
+        switchToCard(IntroPanel.CARD_NAME);
 
         //some focus stuff for the game panel to capture key events
         gp.addComponentListener(new ComponentAdapter() {
@@ -132,7 +132,7 @@ public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher 
     public void switchToCard(String cardName) {
         cl.show(cardPanel, cardName);
     }
-               
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
     private javax.swing.JPanel cardPanel;

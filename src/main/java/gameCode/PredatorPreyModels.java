@@ -4,8 +4,8 @@
 
 package gameCode;
 
-import java.util.Arrays;
 import java.util.Random;
+import gameCode.SimulationUpdateData;
 
 /**
  * Program Model that simulates the population dynamics between predators and prey using a 2D grid
@@ -110,7 +110,7 @@ public class PredatorPreyModels {
         }
     }
      
-    public static void simulateProgramOnce(String prey, String predator, String obstacle, String predAte, String predMoved, int preyRepRate, String[][] grid, int gridSize) {
+    public static SimulationUpdateData simulateProgramOnce(String prey, String predator, String obstacle, String predAte, String predMoved, int preyRepRate, String[][] grid, int gridSize) {
         Random r = new Random();
 
         //Simulate the program
@@ -385,6 +385,6 @@ public class PredatorPreyModels {
         }
         System.out.println("");
         
-        //return statement
+        return new SimulationUpdateData(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid);
     } //end of method
 }

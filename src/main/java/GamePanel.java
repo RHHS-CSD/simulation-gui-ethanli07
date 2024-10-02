@@ -20,6 +20,7 @@ import gameCode.PredatorPreyModels;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import gameCode.SimulationUpdateData;
 
 /**
  *
@@ -277,7 +278,14 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
             if (startGame) {
                 count += 1;
                 if (count % speed == 0) {
-                    PredatorPreyModels.simulateProgramOnce(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, 20);
+                    SimulationUpdateData data = PredatorPreyModels.simulateProgramOnce(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, 20);
+                    
+                    prey = data.getPrey();
+                    predator = data.getPredator();
+                    obstacle = data.getObstacle();
+                    predAte = data.getPredAte();
+                    predMoved = data.getPredMoved();
+                    preyRepRate = data.getPreyRepRate();
                 }
             }
             
