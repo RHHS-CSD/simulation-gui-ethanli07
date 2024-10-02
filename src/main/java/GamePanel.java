@@ -17,6 +17,9 @@ import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import gameCode.PredatorPreyModels;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -58,7 +61,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     boolean startGame = false;
     int preyRepRate = 12;
     int count = 0;
-    int speed = 20;
+    int speed = 50;
     
     
     /**
@@ -71,7 +74,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         preyImg = ImageUtil.loadAndResizeImage("chocolate.png", 16, 16);
         predImg = ImageUtil.loadAndResizeImage("Bob.png", 16, 16);
         obstacleImg = ImageUtil.loadAndResizeImage("gradingHomework.png", 16, 16);
-        backgroundImg = ImageUtil.loadAndResizeImage("floor.jpg", 16, 16);
+        backgroundImg = ImageUtil.loadAndResizeImage("floor.jpg", 256, 144);
         
         this.setFocusable(true);
 
@@ -94,15 +97,6 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                 grid[i][j] = ".";
             }
         }
-        
-        //create the pred info strings
-        for (int i = 0; i < (predator.length() + 1)/3; i++) {
-            predAte += ("T ");
-        }
-        
-        for (int i = 0; i < (predator.length() + 1)/3; i++) {
-            predMoved += "F ";
-        }
     }
 
     private void setupKeys() {
@@ -124,26 +118,32 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         super.paintComponent(g);
         
         //draw background image
-        g.drawImage(backgroundImg, 0, 0, this);
-        g.drawImage(backgroundImg, 0, 288, this);
+        for (int i = 0; i < 3; i++) {
+            g.drawImage(backgroundImg, 0, 144 * i, this);
+            g.drawImage(backgroundImg, 256, 144 * i, this);
+        }
         
         //draw grid
-        for (int i = 0; i < 20; i++) {
-            g.drawLine(i * 16 + 40, 20, i * 16 + 40, 380);
+        g.setColor(Color.WHITE);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
+        
+        for (int i = 0; i < 21; i++) {
+            g.drawLine(i * 16 + 40, 20, i * 16 + 40, 340);
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 21; i++) {
             g.drawLine(40, i * 16 + 20, 360, i * 16 + 20);
         } 
         
         //draw prey, pred, and obstacles on the panel
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
-            g.drawImage(predImg, predator.charAt(i * 3) - 65, predator.charAt(i * 3 + 1) - 65, this);
+            g.drawImage(predImg, (predator.charAt(i * 3) - 65) * 16 + 40, (predator.charAt(i * 3 + 1) - 65) * 16 + 20, this);
         }
         for (int i = 0; i < (prey.length() + 1)/3; i++) {
-            g.drawImage(preyImg, prey.charAt(i * 3) - 65, prey.charAt(i * 3 + 1) - 65, this);
+            g.drawImage(preyImg, (prey.charAt(i * 3) - 65) * 16 + 40, (prey.charAt(i * 3 + 1) - 65) * 16 + 20, this);
         }
         for (int i = 0; i < (obstacle.length() + 1)/3; i++) {
-            g.drawImage(obstacleImg, obstacle.charAt(i * 3) - 65, obstacle.charAt(i * 3 + 1) - 65, this);
+            g.drawImage(obstacleImg, (obstacle.charAt(i * 3) - 65) * 16 + 40, (obstacle.charAt(i * 3 + 1) - 65) * 16 + 20, this);
         }
     }
 
@@ -202,25 +202,44 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         startGame = false;
         grid = new String[gridSize][gridSize];
+        
+        prey = "";
+        predator = "";
+        obstacle = "";
     }//GEN-LAST:event_ResetButtonActionPerformed
 
     private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButtonActionPerformed
-        // TODO add your handling code here:
+        //start the game
+        startGame = true;
+        
+        //adjust the string size
+        prey = prey.substring(0, prey.length() - 1);
+        predator = predator.substring(0, predator.length() - 1);
+        
+        //create the pred info strings
+        for (int i = 0; i < (predator.length() + 1)/3; i++) {
+            predAte += ("T ");
+        }
+        
+        for (int i = 0; i < (predator.length() + 1)/3; i++) {
+            predMoved += "F ";
+        }
     }//GEN-LAST:event_StartButtonActionPerformed
     
     //mouse events
     public void mouseClicked(MouseEvent me) {
-        if (me.getX() > 40 && me.getX() < 360 && me.getY() > 20 && me.getY() < 40) {
+        if (me.getX() > 40 && me.getX() < 360 && me.getY() > 20 && me.getY() < 340) {
             if (me.getButton() == MouseEvent.BUTTON1) { //left click to place prey
-                prey += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65));
+                prey += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
                 grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "@";
+                System.out.println(prey);
             }
             else if (me.getButton() == MouseEvent.BUTTON2) { //middle click to place obstacles
-                obstacle += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65));
+                obstacle += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
                 grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "*";
             }
             else if (me.getButton() == MouseEvent.BUTTON3) { //right click to place pred
-                predator += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65));
+                predator += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
                 grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "P";
             }
         }
@@ -255,9 +274,11 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
      */
     private class AnimTimerTick implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
-            count += 1;
-            if (count % speed == 0) {
-                PredatorPreyModels.simulateProgram(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, 20);
+            if (startGame) {
+                count += 1;
+                if (count % speed == 0) {
+                    PredatorPreyModels.simulateProgramOnce(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, 20);
+                }
             }
             
             //force redraw

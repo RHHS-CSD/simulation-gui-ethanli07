@@ -40,13 +40,14 @@ public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher 
      * Creates new form FrameForGame
      */
     public SimulationFrame() {
-        initComponents();
-
+        this.setSize(420, 420);
+        
         //card layout shows one panel at a time
         cl = new CardLayout();
         cardPanel = new JPanel();
         cardPanel.setLayout(cl);
-
+        this.add(cardPanel);
+        
         //add 3 panels to the CardLayout
         addPanels();
         switchToCard(GamePanel.CARD_NAME);
