@@ -6,12 +6,11 @@
 
 
 import utils.CardSwitcher;
-import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
+import javax.swing.Timer;
 import utils.ImageUtil;
 
 /**
@@ -29,7 +28,8 @@ public class IntroPanel extends javax.swing.JPanel {
     BufferedImage classroomImg;
     
     //variables
-    int rdPosition = 40;
+    int rdPosition = 20;
+    
     
     /**
      * Creates new form IntroPanel
@@ -39,8 +39,12 @@ public class IntroPanel extends javax.swing.JPanel {
         
         //Load images
         preyImg = ImageUtil.loadAndResizeImage("chocolate.png", 48, 48);
-        predImg = ImageUtil.loadAndResizeImage("Bob.png", 32, 32);
+        predImg = ImageUtil.loadAndResizeImage("Bob.png", 48, 48);
         classroomImg = ImageUtil.loadAndResizeImage("classroom.png", 400, 400);
+        
+        //Timer
+        Timer animTimer = new Timer(30, new AnimTimerTick());
+        animTimer.start();
         
         //switcher
         switcher = p;
@@ -50,8 +54,8 @@ public class IntroPanel extends javax.swing.JPanel {
         super.paintComponent(g);
         
         g.drawImage(classroomImg, 0, 0, this);
-        g.drawImage(preyImg, rdPosition, 224, this);
-        g.drawImage(predImg, rdPosition - 80, 208, this);
+        g.drawImage(preyImg, rdPosition, 246, this);
+        g.drawImage(predImg, rdPosition - 80, 246, this);
     }
 
     /**
@@ -88,22 +92,20 @@ public class IntroPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(GameButton)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(infoButton)))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addGap(90, 90, 90)
+                .addComponent(GameButton)
+                .addGap(58, 58, 58)
+                .addComponent(infoButton)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(240, Short.MAX_VALUE)
-                .addComponent(GameButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(infoButton)
-                .addGap(70, 70, 70))
+                .addContainerGap(309, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(infoButton)
+                    .addComponent(GameButton))
+                .addGap(52, 52, 52))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -121,11 +123,14 @@ public class IntroPanel extends javax.swing.JPanel {
      */
     private class AnimTimerTick implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
+            //update image positions
+            rdPosition += 6;
+            if (rdPosition > 725) {
+                rdPosition = - 20;
+            }
+            
             //force redraw
             repaint();
-            
-            //update image positions
-            rdPosition += 4;
         }
     }
 

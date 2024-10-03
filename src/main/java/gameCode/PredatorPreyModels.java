@@ -385,6 +385,6 @@ public class PredatorPreyModels {
         }
         System.out.println("");
         
-        return new SimulationUpdateData(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid);
+        return new SimulationUpdateData(prey, predator, predAte, predMoved, preyRepRate, grid);
     } //end of method
 }

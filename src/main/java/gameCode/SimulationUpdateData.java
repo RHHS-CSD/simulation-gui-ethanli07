@@ -11,22 +11,18 @@ package gameCode;
 public class SimulationUpdateData {
     String prey;
     String predator;
-    String obstacle;
     String predAte;
     String predMoved;
     int preyRepRate;
     String[][] grid;
-    int gridSize;
     
-    public SimulationUpdateData(String prey, String predator, String obstacle, String predAte, String predMoved, int preyRepRate, String[][] grid) {
+    public SimulationUpdateData(String prey, String predator, String predAte, String predMoved, int preyRepRate, String[][] grid) {
         this.prey = prey;
         this.predator = predator;
-        this.obstacle = obstacle;
         this.predAte = predAte;
         this.predMoved = predMoved;
         this.preyRepRate = preyRepRate;
         this.grid = grid;
-        this.gridSize = gridSize;
     }
     
     public String getPrey() {
@@ -35,10 +31,6 @@ public class SimulationUpdateData {
     
     public String getPredator() {
         return predator;
-    }
-    
-    public String getObstacle() {
-        return obstacle;
     }
     
     public String getPredAte() {

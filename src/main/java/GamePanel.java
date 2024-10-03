@@ -202,11 +202,15 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         startGame = false;
-        grid = new String[gridSize][gridSize];
         
+        //reset the variables
         prey = "";
         predator = "";
         obstacle = "";
+        grid = new String[gridSize][gridSize];
+        
+        //reenable the start button
+        StartButton.setEnabled(true);
     }//GEN-LAST:event_ResetButtonActionPerformed
 
     private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButtonActionPerformed
@@ -216,6 +220,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         //adjust the string size
         prey = prey.substring(0, prey.length() - 1);
         predator = predator.substring(0, predator.length() - 1);
+        obstacle = obstacle.substring(0, obstacle.length() - 1);
         
         //create the pred info strings
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
@@ -225,6 +230,9 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
             predMoved += "F ";
         }
+        
+        //disable button to prevent the user from breaking the game
+        StartButton.setEnabled(false);
     }//GEN-LAST:event_StartButtonActionPerformed
     
     //mouse events
@@ -282,7 +290,6 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                     
                     prey = data.getPrey();
                     predator = data.getPredator();
-                    obstacle = data.getObstacle();
                     predAte = data.getPredAte();
                     predMoved = data.getPredMoved();
                     preyRepRate = data.getPreyRepRate();
