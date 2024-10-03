@@ -26,6 +26,8 @@ public class IntroPanel extends javax.swing.JPanel {
     BufferedImage preyImg;
     BufferedImage predImg;
     BufferedImage classroomImg;
+    BufferedImage title1Img;
+    BufferedImage title2Img;
     
     //variables
     int rdPosition = 20;
@@ -41,6 +43,8 @@ public class IntroPanel extends javax.swing.JPanel {
         preyImg = ImageUtil.loadAndResizeImage("chocolate.png", 48, 48);
         predImg = ImageUtil.loadAndResizeImage("Bob.png", 48, 48);
         classroomImg = ImageUtil.loadAndResizeImage("classroom.png", 400, 400);
+        title1Img = ImageUtil.loadAndResizeImage("TheLife.png", 300, 75);
+        title2Img = ImageUtil.loadAndResizeImage("ofRD.png", 196, 75);
         
         //Timer
         Timer animTimer = new Timer(30, new AnimTimerTick());
@@ -56,6 +60,8 @@ public class IntroPanel extends javax.swing.JPanel {
         g.drawImage(classroomImg, 0, 0, this);
         g.drawImage(preyImg, rdPosition, 246, this);
         g.drawImage(predImg, rdPosition - 80, 246, this);
+        g.drawImage(title1Img, 50, 69, this);
+        g.drawImage(title2Img, 102, 154, this);
     }
 
     /**

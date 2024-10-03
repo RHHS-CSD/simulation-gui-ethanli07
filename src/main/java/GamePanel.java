@@ -143,7 +143,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         for (int i = 0; i < (prey.length() + 1)/3; i++) {
             g.drawImage(preyImg, (prey.charAt(i * 3) - 65) * 16 + 40, (prey.charAt(i * 3 + 1) - 65) * 16 + 20, this);
         }
-        for (int i = 0; i < (obstacle.length() + 1)/3; i++) {
+        for (int i = 0; i < (obstacle.length())/3; i++) {
             g.drawImage(obstacleImg, (obstacle.charAt(i * 3) - 65) * 16 + 40, (obstacle.charAt(i * 3 + 1) - 65) * 16 + 20, this);
         }
     }
@@ -192,11 +192,11 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(344, Short.MAX_VALUE)
+                .addContainerGap(346, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addGap(14, 14, 14))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -220,11 +220,10 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         //adjust the string size
         prey = prey.substring(0, prey.length() - 1);
         predator = predator.substring(0, predator.length() - 1);
-        obstacle = obstacle.substring(0, obstacle.length() - 1);
         
         //create the pred info strings
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
-            predAte += ("T ");
+            predAte += "T ";
         }
         
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
@@ -241,7 +240,6 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
             if (me.getButton() == MouseEvent.BUTTON1) { //left click to place prey
                 prey += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
                 grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "@";
-                System.out.println(prey);
             }
             else if (me.getButton() == MouseEvent.BUTTON2) { //middle click to place obstacles
                 obstacle += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
@@ -293,6 +291,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                     predAte = data.getPredAte();
                     predMoved = data.getPredMoved();
                     preyRepRate = data.getPreyRepRate();
+                    grid = data.getGrid();
                 }
             }
             

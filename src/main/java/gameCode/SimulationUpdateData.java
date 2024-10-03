@@ -45,7 +45,7 @@ public class SimulationUpdateData {
         return preyRepRate;
     }
     
-    public String[][] grid() {
+    public String[][] getGrid() {
         return grid;
     }
 }
