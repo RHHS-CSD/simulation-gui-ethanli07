@@ -196,7 +196,7 @@ public class PredatorPreyModels {
             } //end of prey loop
             
             //predator movement if prey is not nearby
-            if (predMoved.charAt(i/3) == 'F') {
+            if (predMoved.charAt(i * 2/3) == 'F') {
                 predAte = predAte.substring(0, i*2/3) + (char) (predAte.charAt(i*2/3) - 1) + predAte.substring(i*2/3 + 1);
                 String predatorOP = predator.substring(i, i + 2);
                 switch (r.nextInt(4)) {

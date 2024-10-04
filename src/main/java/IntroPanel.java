@@ -132,8 +132,8 @@ public class IntroPanel extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent ae) {
             //update image positions
             rdPosition += 6;
-            if (rdPosition > 725) {
-                rdPosition = - 20;
+            if (rdPosition > 750) {
+                rdPosition = -20;
             }
             
             //force redraw
