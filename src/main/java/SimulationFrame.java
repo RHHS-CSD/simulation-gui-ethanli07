@@ -28,8 +28,8 @@ import java.awt.event.ComponentAdapter;
 import javax.swing.JPanel;
 
 /**
- *
- * @author michael.roy-diclemen
+ * Frame that stores and allows for the switching between the various panels of the simulation
+ * @author Ethan Li
  */
 public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher {
 
@@ -40,7 +40,7 @@ public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher 
      * Creates new form FrameForGame
      */
     public SimulationFrame() {
-        this.setSize(400, 440);
+        this.setSize(440, 440);
         
         //card layout shows one panel at a time
         cl = new CardLayout();
@@ -83,11 +83,11 @@ public class SimulationFrame extends javax.swing.JFrame implements CardSwitcher 
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         pack();

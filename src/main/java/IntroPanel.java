@@ -14,8 +14,9 @@ import javax.swing.Timer;
 import utils.ImageUtil;
 
 /**
- *
- * @author michael.roy-diclemen
+ * Panel displaying the intro screen for the game.
+ * Allows the user to either play the game or read the instructions about how to play from this screen.
+ * @author Ethan Li
  */
 public class IntroPanel extends javax.swing.JPanel {
     public static final String CARD_NAME = "intro";
@@ -42,9 +43,9 @@ public class IntroPanel extends javax.swing.JPanel {
         //Load images
         preyImg = ImageUtil.loadAndResizeImage("chocolate.png", 48, 48);
         predImg = ImageUtil.loadAndResizeImage("Bob.png", 48, 48);
-        classroomImg = ImageUtil.loadAndResizeImage("classroom.png", 400, 400);
-        title1Img = ImageUtil.loadAndResizeImage("TheLife.png", 300, 75);
-        title2Img = ImageUtil.loadAndResizeImage("ofRD.png", 196, 75);
+        classroomImg = ImageUtil.loadAndResizeImage("classroom.png", 428, 404);
+        title1Img = ImageUtil.loadAndResizeImage("TheLife.png", 288, 72);
+        title2Img = ImageUtil.loadAndResizeImage("ofRD.png", 196, 72);
         
         //Timer
         Timer animTimer = new Timer(30, new AnimTimerTick());
@@ -58,10 +59,10 @@ public class IntroPanel extends javax.swing.JPanel {
         super.paintComponent(g);
         
         g.drawImage(classroomImg, 0, 0, this);
-        g.drawImage(preyImg, rdPosition, 246, this);
-        g.drawImage(predImg, rdPosition - 80, 246, this);
-        g.drawImage(title1Img, 50, 69, this);
-        g.drawImage(title2Img, 102, 154, this);
+        g.drawImage(preyImg, rdPosition, 248, this);
+        g.drawImage(predImg, rdPosition - 80, 248, this);
+        g.drawImage(title1Img, 70, 72, this);
+        g.drawImage(title2Img, 116, 154, this);
     }
 
     /**
@@ -98,16 +99,16 @@ public class IntroPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(104, 104, 104)
                 .addComponent(GameButton)
                 .addGap(58, 58, 58)
                 .addComponent(infoButton)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(309, Short.MAX_VALUE)
+                .addContainerGap(313, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(infoButton)
                     .addComponent(GameButton))

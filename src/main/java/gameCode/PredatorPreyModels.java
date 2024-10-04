@@ -109,7 +109,19 @@ public class PredatorPreyModels {
             simulateProgramOnce(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, gridSize);
         }
     }
-     
+    
+    /**
+     * Simulates one instance of the program
+     * @param prey The current prey position string
+     * @param predator The current predator position string
+     * @param obstacle The obstacle (unwalkable tile) positions
+     * @param predAte The current predAte string
+     * @param predMoved The current predMoved string
+     * @param preyRepRate The current value of preyRepRate
+     * @param grid The current state of the grid
+     * @param gridSize The dimensions of the grid for the simulation
+     * @return obj An object containing all the required information to update the simulation values
+     */
     public static SimulationUpdateData simulateProgramOnce(String prey, String predator, String obstacle, String predAte, String predMoved, int preyRepRate, String[][] grid, int gridSize) {
         Random r = new Random();
 
@@ -385,6 +397,7 @@ public class PredatorPreyModels {
         }
         System.out.println("");
         
+        //return an object containing the updated simulation data
         return new SimulationUpdateData(prey, predator, predAte, predMoved, preyRepRate, grid);
     } //end of method
 }

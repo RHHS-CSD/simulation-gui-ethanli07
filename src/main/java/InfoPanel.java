@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-
+//imports
 import utils.CardSwitcher;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import utils.ImageUtil;
 
 /**
- *
- * @author michael.roy-diclemen
+ * Panel that informs the user about how the game works
+ * @author Ethan Li
  */
 public class InfoPanel extends javax.swing.JPanel {
     public static final String CARD_NAME = "info";
@@ -25,7 +25,7 @@ public class InfoPanel extends javax.swing.JPanel {
      */
     public InfoPanel(CardSwitcher p) {
         initComponents();
-        blackboardImg = ImageUtil.loadAndResizeImage("blackboard.jpg", 400, 400);
+        blackboardImg = ImageUtil.loadAndResizeImage("blackboard.jpg", 428, 404);
         switcher = p;
     }
     
@@ -98,25 +98,24 @@ public class InfoPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(74, 74, 74)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(backButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel8))))
-                .addContainerGap(58, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(104, 104, 104))
+                .addGap(119, 119, 119))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(175, Short.MAX_VALUE)
+                .addComponent(backButton)
+                .addGap(175, 175, 175))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +136,9 @@ public class InfoPanel extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(backButton)
-                .addGap(30, 30, 30))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -5,8 +5,8 @@
 package gameCode;
 
 /**
- *
- * @author Ethan
+ * Class that stores the updated values of the required simulation data
+ * @author Ethan Li
  */
 public class SimulationUpdateData {
     String prey;
@@ -16,6 +16,15 @@ public class SimulationUpdateData {
     int preyRepRate;
     String[][] grid;
     
+    /**
+     * Creates an object storing all the necessary update data
+     * @param prey The current prey position string
+     * @param predator The current predator position string
+     * @param predAte The current predAte string
+     * @param predMoved The current predMoved string
+     * @param preyRepRate The current value of preyRepRate
+     * @param grid The current state of the grid
+     */
     public SimulationUpdateData(String prey, String predator, String predAte, String predMoved, int preyRepRate, String[][] grid) {
         this.prey = prey;
         this.predator = predator;
@@ -25,6 +34,7 @@ public class SimulationUpdateData {
         this.grid = grid;
     }
     
+    //Getters
     public String getPrey() {
         return prey;
     }

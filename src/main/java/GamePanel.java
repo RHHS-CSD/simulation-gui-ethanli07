@@ -23,8 +23,8 @@ import java.awt.Graphics2D;
 import gameCode.SimulationUpdateData;
 
 /**
- *
- * @author michael.roy-diclemente
+ * Panel where the simulation of the game occurs
+ * @author Ethan Li
  */
 public class GamePanel extends javax.swing.JPanel implements MouseListener {
     //initialize random
@@ -43,9 +43,6 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     BufferedImage obstacleImg;
     BufferedImage backgroundImg;
     
-    //constants
-    final int gridSize = 20;
-    
     //position strings
     String prey = "";
     String predator = "";
@@ -56,6 +53,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     String predMoved = "";
     
     //create the grid
+    int gridSize = 20;
     String[][] grid = new String[gridSize][gridSize];
     
     //game variables
@@ -72,9 +70,9 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         initComponents();
         
         //initialize the image
-        preyImg = ImageUtil.loadAndResizeImage("chocolate.png", 16, 16);
-        predImg = ImageUtil.loadAndResizeImage("Bob.png", 16, 16);
-        obstacleImg = ImageUtil.loadAndResizeImage("gradingHomework.png", 16, 16);
+        preyImg = ImageUtil.loadAndResizeImage("chocolate.png", (320/gridSize), (320/gridSize));
+        predImg = ImageUtil.loadAndResizeImage("Bob.png", (320/gridSize), (320/gridSize));
+        obstacleImg = ImageUtil.loadAndResizeImage("gradingHomework.png", (320/gridSize), (320/gridSize));
         backgroundImg = ImageUtil.loadAndResizeImage("floor.jpg", 256, 144);
         
         this.setFocusable(true);
@@ -124,27 +122,31 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
             g.drawImage(backgroundImg, 256, 144 * i, this);
         }
         
+        //draw side panel
+        g.setColor(new Color(211, 211, 211, 180));
+        g.fillRect(0, 0, 76, 404);
+        
         //draw grid
         g.setColor(Color.WHITE);
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2));
         
         for (int i = 0; i < 21; i++) {
-            g.drawLine(i * 16 + 40, 20, i * 16 + 40, 340);
+            g.drawLine(i * (320/gridSize) + 92, 20, i * (320/gridSize) + 92, 340);
         }
         for (int i = 0; i < 21; i++) {
-            g.drawLine(40, i * 16 + 20, 360, i * 16 + 20);
+            g.drawLine(92, i * (320/gridSize) + 20, 412, i * (320/gridSize) + 20);
         } 
         
         //draw prey, pred, and obstacles on the panel
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
-            g.drawImage(predImg, (predator.charAt(i * 3) - 65) * 16 + 40, (predator.charAt(i * 3 + 1) - 65) * 16 + 20, this);
+            g.drawImage(predImg, (predator.charAt(i * 3) - 65) * (320/gridSize) + 92, (predator.charAt(i * 3 + 1) - 65) * (320/gridSize) + 20, this);
         }
         for (int i = 0; i < (prey.length() + 1)/3; i++) {
-            g.drawImage(preyImg, (prey.charAt(i * 3) - 65) * 16 + 40, (prey.charAt(i * 3 + 1) - 65) * 16 + 20, this);
+            g.drawImage(preyImg, (prey.charAt(i * 3) - 65) * (320/gridSize) + 92, (prey.charAt(i * 3 + 1) - 65) * (320/gridSize) + 20, this);
         }
         for (int i = 0; i < (obstacle.length())/3; i++) {
-            g.drawImage(obstacleImg, (obstacle.charAt(i * 3) - 65) * 16 + 40, (obstacle.charAt(i * 3 + 1) - 65) * 16 + 20, this);
+            g.drawImage(obstacleImg, (obstacle.charAt(i * 3) - 65) * (320/gridSize) + 92, (obstacle.charAt(i * 3 + 1) - 65) * (320/gridSize) + 20, this);
         }
     }
 
@@ -159,6 +161,13 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
 
         ResetButton = new javax.swing.JButton();
         StartButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        repRateSlider = new javax.swing.JSlider();
+        jLabel3 = new javax.swing.JLabel();
+        gridSizeField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        speedSlider = new javax.swing.JSlider();
 
         ResetButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
         ResetButton.setText("RESET");
@@ -178,25 +187,77 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Prey Rep");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Rate:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Grid Size:");
+
+        gridSizeField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        gridSizeField.setText("20");
+        gridSizeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gridSizeFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Speed:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(repRateSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(8, 8, 8))
+                            .addComponent(jLabel4)
+                            .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(gridSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(346, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gridSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(repRateSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -217,6 +278,10 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         //start the game
         startGame = true;
         
+        //set the prey reproduction rate and speed based on the slider values
+        preyRepRate = (100 - repRateSlider.getValue())/5;
+        speed = (101 - speedSlider.getValue());
+        
         //adjust the string size
         prey = prey.substring(0, prey.length() - 1);
         predator = predator.substring(0, predator.length() - 1);
@@ -225,29 +290,32 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
             predAte += "T ";
         }
-        
         for (int i = 0; i < (predator.length() + 1)/3; i++) {
             predMoved += "F ";
         }
         
-        //disable button to prevent the user from breaking the game
+        //disable the start button to prevent the user from breaking the game
         StartButton.setEnabled(false);
     }//GEN-LAST:event_StartButtonActionPerformed
+
+    private void gridSizeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gridSizeFieldActionPerformed
+        gridSize = Integer.parseInt(gridSizeField.getText());
+    }//GEN-LAST:event_gridSizeFieldActionPerformed
     
     //mouse events
     public void mouseClicked(MouseEvent me) {
-        if (me.getX() > 40 && me.getX() < 360 && me.getY() > 20 && me.getY() < 340) {
-            if (me.getButton() == MouseEvent.BUTTON1) { //left click to place prey
-                prey += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
-                grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "@";
+        if (me.getX() > 92 && me.getX() < 412 && me.getY() > 20 && me.getY() < 340) { //make sure that the mouse is on the grid
+            if (me.getButton() == MouseEvent.BUTTON1) { //place a prey on the grid if the user left clicks
+                prey += ((char) ((me.getX() - 92)/(320/gridSize) + 65) + "" + (char) ((me.getY() - 20)/(320/gridSize) + 65) + " ");
+                grid[(me.getX() - 92)/(320/gridSize)][(me.getY() - 20)/(320/gridSize)] = "@";
             }
-            else if (me.getButton() == MouseEvent.BUTTON2) { //middle click to place obstacles
-                obstacle += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
-                grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "*";
+            else if (me.getButton() == MouseEvent.BUTTON2) { //place an obstacle on the grid if the user middle clicks
+                obstacle += ((char) ((me.getX() - 92)/(320/gridSize) + 65) + "" + (char) ((me.getY() - 20)/(320/gridSize) + 65) + " ");
+                grid[(me.getX() - 92)/(320/gridSize)][(me.getY() - 20)/(320/gridSize)] = "*";
             }
-            else if (me.getButton() == MouseEvent.BUTTON3) { //right click to place pred
-                predator += ((char) ((me.getX() - 40)/16 + 65) + "" + (char) ((me.getY() - 20)/16 + 65) + " ");
-                grid[(me.getX() - 40)/16][(me.getY() - 20)/16] = "P";
+            else if (me.getButton() == MouseEvent.BUTTON3) { //place a predator on the grid if the user right clicks
+                predator += ((char) ((me.getX() - 92)/(320/gridSize) + 65) + "" + (char) ((me.getY() - 20)/(320/gridSize) + 65) + " ");
+                grid[(me.getX() - 92)/(320/gridSize)][(me.getY() - 20)/(320/gridSize)] = "P";
             }
         }
     }
@@ -282,10 +350,11 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     private class AnimTimerTick implements ActionListener {
         public void actionPerformed(ActionEvent ae) {
             if (startGame) {
-                count += 1;
-                if (count % speed == 0) {
+                count += 1; //update the game clock
+                if (count % speed == 0) { //if enough time has passed, simulate the program once
                     SimulationUpdateData data = PredatorPreyModels.simulateProgramOnce(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, 20);
                     
+                    //update the simulation's data based on the values returned by the program
                     prey = data.getPrey();
                     predator = data.getPredator();
                     predAte = data.getPredAte();
@@ -302,5 +371,12 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ResetButton;
     private javax.swing.JButton StartButton;
+    private javax.swing.JTextField gridSizeField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JSlider repRateSlider;
+    private javax.swing.JSlider speedSlider;
     // End of variables declaration//GEN-END:variables
 }
