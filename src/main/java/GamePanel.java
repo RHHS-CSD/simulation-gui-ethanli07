@@ -170,8 +170,11 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         jLabel4 = new javax.swing.JLabel();
         speedSlider = new javax.swing.JSlider();
         StartButton = new javax.swing.JButton();
+        predPopulationDisplay = new javax.swing.JLabel();
+        preyRepRateDisplay = new javax.swing.JLabel();
+        preyPopulationDisplay = new javax.swing.JLabel();
 
-        ResetButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        ResetButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
         ResetButton.setText("RESET");
         ResetButton.setPreferredSize(new java.awt.Dimension(104, 40));
         ResetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +183,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
             }
         });
 
-        PauseButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        PauseButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
         PauseButton.setText("PAUSE");
         PauseButton.setPreferredSize(new java.awt.Dimension(104, 40));
         PauseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -209,7 +212,7 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Speed:");
 
-        StartButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        StartButton.setFont(new java.awt.Font("Segoe UI Semibold", 1, 22)); // NOI18N
         StartButton.setText("START");
         StartButton.setPreferredSize(new java.awt.Dimension(104, 40));
         StartButton.addActionListener(new java.awt.event.ActionListener() {
@@ -217,6 +220,18 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                 StartButtonActionPerformed(evt);
             }
         });
+
+        predPopulationDisplay.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        predPopulationDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        predPopulationDisplay.setText("Pred Pop: ");
+
+        preyRepRateDisplay.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        preyRepRateDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        preyRepRateDisplay.setText("Prey Rep Rate: ");
+
+        preyPopulationDisplay.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        preyPopulationDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        preyPopulationDisplay.setText("Prey Pop: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -236,12 +251,19 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                             .addComponent(jLabel3)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(98, 98, 98)
-                        .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(PauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(preyPopulationDisplay)
+                        .addGap(12, 12, 12)
+                        .addComponent(predPopulationDisplay)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(preyRepRateDisplay)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,12 +282,17 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                    .addComponent(preyRepRateDisplay)
+                    .addComponent(predPopulationDisplay)
+                    .addComponent(preyPopulationDisplay))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PauseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -318,7 +345,8 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
         startGame = true;
         
         //set the prey reproduction rate and speed based on the slider values
-        preyRepRate = (100 - repRateSlider.getValue())/5;
+        preyRepRate = (110 - repRateSlider.getValue())/5;
+        System.out.println(preyRepRate);
         speed = (101 - speedSlider.getValue());
         
         //adjust the string size
@@ -398,6 +426,11 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
                     predMoved = data.getPredMoved();
                     preyRepRate = data.getPreyRepRate();
                     grid = data.getGrid();
+                    
+                    //update the simulation state values
+                    preyPopulationDisplay.setText("Prey Pop: " + (prey.length() + 1)/3);
+                    predPopulationDisplay.setText("Pred Pop: " + (predator.length() + 1)/3);
+                    preyRepRateDisplay.setText("Prey Rep Rate: " + Math.round((100.0/preyRepRate) * 100)/100.0 + "%");
                 }
             }
             
@@ -414,6 +447,9 @@ public class GamePanel extends javax.swing.JPanel implements MouseListener {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel predPopulationDisplay;
+    private javax.swing.JLabel preyPopulationDisplay;
+    private javax.swing.JLabel preyRepRateDisplay;
     private javax.swing.JSlider repRateSlider;
     private javax.swing.JSlider speedSlider;
     // End of variables declaration//GEN-END:variables

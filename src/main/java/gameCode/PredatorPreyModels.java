@@ -103,11 +103,6 @@ public class PredatorPreyModels {
         for (int i = 0; i < predPop; i++) {
             predMoved += "F ";
         }
-        
-        //run the main program
-        while (true) {
-            simulateProgramOnce(prey, predator, obstacle, predAte, predMoved, preyRepRate, grid, gridSize);
-        }
     }
     
     /**
@@ -385,7 +380,9 @@ public class PredatorPreyModels {
             preyRepRate += 1; //decreases chance for reproduction
         }
         if (cropGrowthRate == 1) {
-            preyRepRate -= 1; //increases chance for reproduction
+            if (preyRepRate - 1 > 1) { //make sure the prey repRate can't ever be 100% to prevent the program from breaking
+                preyRepRate -= 1; //increases chance for reproduction
+            }
         }
         
         //output the new grid
